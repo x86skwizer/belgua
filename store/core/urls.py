@@ -4,5 +4,6 @@ from . import views
 app_name = "core"
 
 urlpatterns = [
-	path('', views.home, name='home'),
+	path('', views.index, name='index'),
+	path('contact.html', views.contact, name='contact'),
 ]
