@@ -27,4 +27,7 @@ urlpatterns = [
 	path('wishlist.html', views.wishlist, name='wishlist'),
 	path('wishlist/', views.wishlist, name='wishlist'),
 	path('wishlist', views.wishlist, name='wishlist'),
+	path('login.html', views.login, name='login'),
+	path('login/', views.login, name='login'),
+	path('login', views.login, name='login'),
 ]

@@ -42,3 +42,6 @@ def my_account(request):
 
 def wishlist(request):
 	return render(request, 'wishlist.html')
+
+def login(request):
+	return render(request, 'login.html')
