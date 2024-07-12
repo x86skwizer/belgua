@@ -24,4 +24,7 @@ urlpatterns = [
 	path('my-account.html', views.my_account, name='my-account'),
 	path('my-account/', views.my_account, name='my-account'),
 	path('my-account', views.my_account, name='my-account'),
+	path('wishlist.html', views.wishlist, name='wishlist'),
+	path('wishlist/', views.wishlist, name='wishlist'),
+	path('wishlist', views.wishlist, name='wishlist'),
 ]

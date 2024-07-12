@@ -39,3 +39,6 @@ def checkout(request):
 
 def my_account(request):
 	return render(request, 'my-account.html')
+
+def wishlist(request):
+	return render(request, 'wishlist.html')
