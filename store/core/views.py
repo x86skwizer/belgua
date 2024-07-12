@@ -33,3 +33,6 @@ def product_list(request):
 
 def product_detail(request):
 	return render(request, 'product-detail.html')
+
+def checkout(request):
+	return render(request, 'checkout.html')
