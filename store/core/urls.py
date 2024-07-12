@@ -21,4 +21,7 @@ urlpatterns = [
 	path('checkout.html', views.checkout, name='checkout'),
 	path('checkout/', views.checkout, name='checkout'),
 	path('checkout', views.checkout, name='checkout'),
+	path('my-account.html', views.my_account, name='my-account'),
+	path('my-account/', views.my_account, name='my-account'),
+	path('my-account', views.my_account, name='my-account'),
 ]

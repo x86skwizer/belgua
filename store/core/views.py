@@ -36,3 +36,6 @@ def product_detail(request):
 
 def checkout(request):
 	return render(request, 'checkout.html')
+
+def my_account(request):
+	return render(request, 'my-account.html')
