@@ -27,3 +27,6 @@ def contact(request):
 	
 def cart(request):
 	return render(request, 'cart.html')
+
+def product_list(request):
+	return render(request, 'product-list.html')
