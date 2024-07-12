@@ -30,3 +30,6 @@ def cart(request):
 
 def product_list(request):
 	return render(request, 'product-list.html')
+
+def product_detail(request):
+	return render(request, 'product-detail.html')
