@@ -1,10 +1,12 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.core.mail import send_mail
+from .models import Product
 
 # Create your views here.
 def index(request):
-	return render(request, 'index.html')
+	products = Product.objects.all()
+	return render(request, 'index.html', {'products': products})
 
 def contact(request):
 	if request.method == 'POST':
