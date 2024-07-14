@@ -242,7 +242,13 @@
                                 </div>
                             </div>
                             <div class="product-price">
+                                
+                                {% if product.is_sale %}
+                                <h3><span>$</span>{{ product.sale_price }}
+                                <span><strike>&nbsp;${{ product.price }}</strike></span></h3>
+                                {% else %}
                                 <h3><span>$</span>{{ product.price }}</h3>
+                                {% endif %}
                                 <a class="btn" href=""><i class="fa fa-shopping-cart"></i>Buy Now</a>
                             </div>
                         </div>
