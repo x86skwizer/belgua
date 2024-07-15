@@ -40,8 +40,9 @@ def product_list(request):
 	return render(request, 'product-list.html')
 
 def product_detail(request, pk):
+	products = Product.objects.all()
 	product = Product.objects.get(id=pk)
-	return render(request, 'product-detail.html', {'product': product})
+	return render(request, 'product-detail.html', {'products': products, 'product': product})
 
 def checkout(request):
 	return render(request, 'checkout.html')
