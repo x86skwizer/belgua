@@ -24,11 +24,20 @@ class Customer(models.Model):
 
 # Our Products
 class Product(models.Model):
-	name = models.CharField(max_length=100)
+	name = models.CharField(max_length=1000)
 	price = models.DecimalField(default=0, decimal_places=2, max_digits=6)
 	category = models.ForeignKey(Category, on_delete=models.CASCADE, default=1)
-	description = models.CharField(max_length=250, default='', blank=True, null=True)
-	image = models.ImageField(upload_to='uploads/product/')
+	description = models.CharField(max_length=9000, default='', blank=True, null=True)
+	specification1 = models.CharField(max_length=9000, default='', blank=True, null=True)
+	specification2 = models.CharField(max_length=9000, default='', blank=True, null=True)
+	specification3 = models.CharField(max_length=9000, default='', blank=True, null=True)
+	specification4 = models.CharField(max_length=9000, default='', blank=True, null=True)
+	specification5 = models.CharField(max_length=9000, default='', blank=True, null=True)
+	warning = models.CharField(max_length=9000, default='', blank=True, null=True)
+	image1 = models.ImageField(upload_to='uploads/product/')
+	image2 = models.ImageField(upload_to='uploads/product/')
+	image3 = models.ImageField(upload_to='uploads/product/')
+	image4 = models.ImageField(upload_to='uploads/product/')
 
 	# Sales
 	is_sale = models.BooleanField(default=False)

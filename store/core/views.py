@@ -39,8 +39,9 @@ def cart(request):
 def product_list(request):
 	return render(request, 'product-list.html')
 
-def product_detail(request):
-	return render(request, 'product-detail.html')
+def product_detail(request, pk):
+	product = Product.objects.get(id=pk)
+	return render(request, 'product-detail.html', {'product': product})
 
 def checkout(request):
 	return render(request, 'checkout.html')
