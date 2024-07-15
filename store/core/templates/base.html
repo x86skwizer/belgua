@@ -42,14 +42,8 @@
         </div>
         <!-- Top bar End -->
         
-        <!-- Nav Bar Start -->
-        <div class="nav">
-            <div class="container-fluid">
-                {% include 'navbar.html' %}
-            </div>
-        </div>
-        <!-- Nav Bar End -->      
-        
+        {% include 'navbar.html' %}
+      
         <!-- Bottom Bar Start -->
         <div class="bottom-bar">
             <div class="container-fluid">
@@ -83,6 +77,15 @@
             </div>
         </div>
         <!-- Bottom Bar End --> 
+
+{% if messages %}
+	{% for message in messages %}
+	<div class="alert">
+		<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+		{{ message }}
+	</div>
+	{% endfor %}
+{% endif %}
 
 {% block content %}
 
