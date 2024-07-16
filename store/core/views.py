@@ -7,7 +7,7 @@ from django.contrib.auth.forms import UserCreationForm
 from .forms import SignUpForm
 from django import forms
 from django.contrib import messages
-from .models import Product
+from .models import Product, Category
 import random
 
 # Create your views here
@@ -38,8 +38,18 @@ def contact(request):
 def cart(request):
 	return render(request, 'cart.html')
 
-def product_list(request):
-	return render(request, 'product-list.html')
+def category(request, foo):
+	# Replace Hyphens with spaces
+	foo = foo.replace('-', ' ')
+	# Grab category from URL
+	try:
+		# Look Up category
+		category = Category.objects.get(name=foo)
+		products = Product.objects.filter(category=category)
+		return render(request, 'category.html', {'products': products, 'category': category})
+	except:
+		messages.success(request, ("Category doesn't exist !"))
+		return redirect('core:index')
 
 def product_detail(request, pk):
 	products = list(Product.objects.all())
