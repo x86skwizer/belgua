@@ -39,41 +39,35 @@
                     </div>
                     <div class="col-md-6">
                         <div class="header-slider normal-slider">
+                            {% for product in products %}
                             <div class="header-slider-item">
-                                <img src="{% static 'store/img/slider-1.jpg' %}" alt="Slider Image" />
+                                <img src="{{ product.image1.url }}" alt="Slider Image" style="width: 700px; height: 700px;" />
                                 <div class="header-slider-caption">
-                                    <p>Some text goes here that describes the image</p>
-                                    <a class="btn" href=""><i class="fa fa-shopping-cart"></i>Shop Now</a>
+                                    <p>{{ product.name }}</p>
+                                    <a class="btn" href="{% url 'core:product-detail' product.id %}"><i class="fa fa-shopping-cart"></i>Shop Now</a>
                                 </div>
                             </div>
-                            <div class="header-slider-item">
-                                <img src="{% static 'store/img/slider-2.jpg' %}" alt="Slider Image" />
-                                <div class="header-slider-caption">
-                                    <p>Some text goes here that describes the image</p>
-                                    <a class="btn" href=""><i class="fa fa-shopping-cart"></i>Shop Now</a>
-                                </div>
-                            </div>
-                            <div class="header-slider-item">
-                                <img src="{% static 'store/img/slider-3.jpg' %}" alt="Slider Image" />
-                                <div class="header-slider-caption">
-                                    <p>Some text goes here that describes the image</p>
-                                    <a class="btn" href=""><i class="fa fa-shopping-cart"></i>Shop Now</a>
-                                </div>
-                            </div>
+                            {% endfor %}
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="header-img">
                             <div class="img-item">
                                 <img src="{% static 'store/img/category-1.jpg' %}" />
-                                <a class="img-text" href="">
-                                    <p>Some text goes here that describes the image</p>
+                                <a class="img-text" href="{% url 'core:category' 'Women-Clothes' %}">
+                                    <p>Women Clothes</p>
                                 </a>
                             </div>
                             <div class="img-item">
                                 <img src="{% static 'store/img/category-2.jpg' %}" />
-                                <a class="img-text" href="">
-                                    <p>Some text goes here that describes the image</p>
+                                <a class="img-text" href="{% url 'core:category' 'Kids-Clothes' %}">
+                                    <p>Kids Clothes</p>
+                                </a>
+                            </div>
+                            <div class="img-item">
+                                <img src="{% static 'store/img/category-7.jpg' %}" />
+                                <a class="img-text" href="{% url 'core:category' 'Electronics-&-Accessories' %}">
+                                    <p>Electronics & Accessories</p>
                                 </a>
                             </div>
                         </div>
