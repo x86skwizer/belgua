@@ -8,10 +8,12 @@ from .forms import SignUpForm
 from django import forms
 from django.contrib import messages
 from .models import Product
+import random
 
 # Create your views here
 def index(request):
-	products = Product.objects.all()
+	products = list(Product.objects.all())
+	random.shuffle(products)
 	return render(request, 'index.html', {'products': products})
 
 def contact(request):
@@ -40,8 +42,9 @@ def product_list(request):
 	return render(request, 'product-list.html')
 
 def product_detail(request, pk):
-	products = Product.objects.all()
+	products = list(Product.objects.all())
 	product = Product.objects.get(id=pk)
+	random.shuffle(products)
 	return render(request, 'product-detail.html', {'products': products, 'product': product})
 
 def checkout(request):
