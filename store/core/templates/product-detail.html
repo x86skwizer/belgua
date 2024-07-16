@@ -80,7 +80,7 @@
                                             </div> 
                                         </div>
                                         <div class="action">
-                                            <a class="btn" href="#"><i class="fa fa-shopping-cart"></i>Add to Cart</a>
+                                            <a type="button" data-product-id="{{ product.id }}" class="btn" id="add-cart"><i class="fa fa-shopping-cart"></i>Add to Cart</a>
                                             <a class="btn" href="#"><i class="fa fa-shopping-bag"></i>Buy Now</a>
                                         </div>
                                     </div>
@@ -424,4 +424,29 @@
         </div>
         <!-- Brand End -->
         
+
+        <script>
+            // Check if button pressed
+            $(document).on('click', '#add-cart', function(e){
+                e.preventDefault();
+                var product_id = $(this).data('product-id'); // Assuming product_id is set as a data attribute
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url 'cart:cart_add' %}',
+                    data: {
+                        product_id: product_id,
+                        csrfmiddlewaretoken: '{{ csrf_token }}',
+                        action: 'post'
+                    },
+                    success: function(json){
+                        console.log(json);
+                    },
+                    error: function(xhr, errmsg, err){
+                        console.error(`Error: ${errmsg}`);
+                    }
+                });
+            });
+        </script>
+
+</script>
 {% endblock %}
