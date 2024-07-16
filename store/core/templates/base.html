@@ -70,7 +70,7 @@
                             </a>
                             <a href="{% url 'cart:cart_summary' %}" class="btn cart">
                                 <i class="fa fa-shopping-cart"></i>
-                                <span>(0)</span>
+                                <span id="cart_quantity">{{ cart|length }}</span>
                             </a>
                         </div>
                     </div>

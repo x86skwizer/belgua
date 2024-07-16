@@ -20,7 +20,8 @@ def cart_add(request):
                 product_id = int(product_id)
                 product = get_object_or_404(Product, id=product_id)
                 cart.add(product=product)
-                return JsonResponse({'message': 'Product added to cart successfully.', 'product_name': product.name})
+                cart_quantity = cart.__len__()
+                return JsonResponse({'message': 'Product added to cart successfully.', 'qty': cart_quantity})
             
             except (ValueError, Product.DoesNotExist):
                 return JsonResponse({'error': 'Invalid product ID or product does not exist.'}, status=400)
