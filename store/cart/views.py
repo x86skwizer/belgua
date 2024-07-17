@@ -15,14 +15,16 @@ def cart_add(request):
     
     if request.method == 'POST' and request.POST.get('action') == 'post':
         product_id = request.POST.get('product_id')
+        product_qty = request.POST.get('product_qty')
         
         print("Received POST data:", request.POST)  # Debugging line
 
-        if product_id:
+        if product_id and product_qty:
             try:
                 product_id = int(product_id)
+                product_qty = int(product_qty)
                 product = get_object_or_404(Product, id=product_id)
-                cart.add(product=product)
+                cart.add(product=product, quantity=product_qty)
                 cart_quantity = cart.__len__()
                 return JsonResponse({'message': 'Product added to cart successfully.', 'qty': cart_quantity})
             
