@@ -28,7 +28,7 @@
                                             <th>Product</th>
                                             <th>Price</th>
                                             <th>Quantity</th>
-                                            <th>Total</th>
+                                            <th>Update</th>
                                             <th>Remove</th>
                                         </tr>
                                     </thead>
@@ -45,11 +45,11 @@
                                             <td>
                                                 <div class="qty">
                                                     <button class="btn-minus"><i class="fa fa-minus"></i></button>
-                                                    <input id="qty-cart" type="number" min="1"
+                                                    <input id="select{{ product.id }}" type="number" min="1"
                                                     {% if quantities %}
                                                     {% for key, value in quantities.items %}
                                                         {% if key == product.id|slugify %}
-                                                            value={{ value }}
+                                                            value="{{ value }}"
                                                         {% endif %}
                                                     {% endfor %}
                                                     {% else %}
@@ -59,10 +59,11 @@
                                                     <button class="btn-plus"><i class="fa fa-plus"></i></button>
                                                 </div>
                                             </td>
-                                            <td>${{ product.price }}</td>
+                                            <td><a type="button" data-index="{{ product.id }}" class="btn btn-secondary update-cart"><i class="fas fa-sync"></i></a></td>
                                             <td><button><i class="fa fa-trash"></i></button></td>
                                         </tr>
                                         {% endfor %}
+
                                     </tbody>
                                 </table>
                             </div>
@@ -72,12 +73,6 @@
                     <div class="col-lg-4">
                         <div class="cart-page-inner">
                             <div class="row">
-                                <div class="col-md-12">
-                                    <div class="coupon">
-                                        <input type="text" placeholder="Coupon Code">
-                                        <button>Apply Code</button>
-                                    </div>
-                                </div>
                                 <div class="col-md-12">
                                     <div class="cart-summary">
                                         <div class="cart-content">
@@ -100,4 +95,37 @@
         </div>
         <!-- Cart End -->
         
+
+        <script>
+            $(document).on('click', '.update-cart', function(e){
+                e.preventDefault();
+                var productid = $(this).data('index');
+                var product_qty = $('#select' + productid).val();
+        
+                console.log("Product ID:", productid);  // Debugging line
+                console.log("Product Quantity:", product_qty);  // Debugging line
+        
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url "cart:cart_update" %}',
+                    data: {
+                        product_id: productid,
+                        product_qty: product_qty,
+                        csrfmiddlewaretoken: '{{ csrf_token }}',
+                        action: 'post'
+                    },
+                    success: function(json){
+                        location.reload();
+                    },
+                    error: function(xhr, errmsg, err){
+                        console.error(`Error: ${errmsg}`);
+                    }
+                });
+            });
+        </script>
+        
+        
+        
+        
+
 {% endblock %}

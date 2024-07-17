@@ -40,4 +40,29 @@ def cart_delete(request):
 	pass
 
 def cart_update(request):
-	pass
+    cart = Cart(request)
+    
+    if request.method == 'POST' and request.POST.get('action') == 'post':
+        product_id = request.POST.get('product_id')
+        product_qty = request.POST.get('product_qty')
+
+        print("Received POST data:", request.POST)  # Debugging line
+
+        if product_id and product_qty:
+            try:
+                product_id = int(product_id)
+                product_qty = int(product_qty)
+                
+                product = get_object_or_404(Product, id=product_id)
+                cart.update(product=product, quantity=product_qty)
+                
+                return JsonResponse({'message': 'Product updated in cart successfully.', 'product_name': product.name})
+            
+            except ValueError:
+                return JsonResponse({'error': 'Invalid product ID or quantity.'}, status=400)
+            except Product.DoesNotExist:
+                return JsonResponse({'error': 'Product does not exist.'}, status=400)
+        else:
+            return JsonResponse({'error': 'Product ID or quantity is missing.'}, status=400)
+    
+    return JsonResponse({'error': 'Invalid request method or action.'}, status=405)
