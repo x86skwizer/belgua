@@ -41,9 +41,9 @@
                         <div class="header-slider normal-slider">
                             {% for product in products %}
                             <div class="header-slider-item">
-                                <img src="{{ product.image1.url }}" alt="Slider Image" style="width: 720px; height: 720px;" />
+                                <img src="{{ product.image1.url }}" alt="Slider Image" style="width: 900px; height: 900px;" />
                                 <div class="header-slider-caption">
-                                    <p>{{ product.name }}</p>
+                                    <p><h2><center>{{ product.name }}</center></h2></p>
                                     <a class="btn" href="{% url 'core:product-detail' product.id %}"><i class="fa fa-shopping-cart"></i>Shop Now</a>
                                 </div>
                             </div>
@@ -55,19 +55,19 @@
                             <div class="img-item">
                                 <img src="{% static 'store/img/category-1.jpg' %}" />
                                 <a class="img-text" href="{% url 'core:category' 'Women-Clothes' %}">
-                                    <p>Women Clothes</p>
+                                    <p><h2><center>Women Clothes</center></h2></p>
                                 </a>
                             </div>
                             <div class="img-item">
                                 <img src="{% static 'store/img/category-2.jpg' %}" />
                                 <a class="img-text" href="{% url 'core:category' 'Kids-Clothes' %}">
-                                    <p>Kids Clothes</p>
+                                    <p><h2><center>Kids Clothes</center></h2></p>
                                 </a>
                             </div>
                             <div class="img-item">
                                 <img src="{% static 'store/img/category-7.jpg' %}" />
                                 <a class="img-text" href="{% url 'core:category' 'Electronics-&-Accessories' %}">
-                                    <p>Electronics & Accessories</p>
+                                    <p><h2><center>Electronics & Accessories</center></h2></p>
                                 </a>
                             </div>
                         </div>
@@ -145,7 +145,7 @@
                         <div class="category-item ch-400">
                             <img src="{% static 'store/img/category-2.jpg' %}" />
                             <a class="category-name" href="{% url 'core:category' 'Kids-Clothes' %}">
-                                <p>Kids Clothes</p>
+                                <p><h2><center>Kids Clothes</center></h2></p>
                             </a>
                         </div>
                     </div>
@@ -153,13 +153,13 @@
                         <div class="category-item ch-250">
                             <img src="{% static 'store/img/men.jpg' %}" />
                             <a class="category-name" href="{% url 'core:category' 'Men-Clothes' %}">
-                                <p>Men Clothes</p>
+                                <p><h2><center>Men Clothes</center></h2></p>
                             </a>
                         </div>
                         <div class="category-item ch-150">
                             <img src="{% static 'store/img/iphone.jpg' %}" />
                             <a class="category-name" href="">
-                                <p>Cell Phones</p>
+                                <p><h2><center>Cell Phones</center></h2></p>
                             </a>
                         </div>
                     </div>
@@ -167,13 +167,13 @@
                         <div class="category-item ch-150">
                             <img src="{% static 'store/img/discount.jpg' %}" />
                             <a class="category-name" href="{% url 'core:category' 'Special-Offers' %}">
-                                <p>Special Offers</p>
+                                <p><h2><center>Special Offers</center></h2></p>
                             </a>
                         </div>
                         <div class="category-item ch-250">
                             <img src="{% static 'store/img/category-7.jpg' %}" />
                             <a class="category-name" href="{% url 'core:category' 'Electronics-&-Accessories' %}">
-                                <p>Electronics-&-Accessories</p>
+                                <p><h2><center>Electronics & Accessories</center></h2></p>
                             </a>
                         </div>
                     </div>
@@ -181,7 +181,7 @@
                         <div class="category-item ch-400">
                             <img src="{% static 'store/img/category-8.jpg' %}" />
                             <a class="category-name" href="{% url 'core:category' 'Women-Clothes' %}">
-                                <p>Women Clothes</p>
+                                <p><h2><center>Women Clothes</center></h2></p>
                             </a>
                         </div>
                     </div>
