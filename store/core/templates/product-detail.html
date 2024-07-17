@@ -47,11 +47,7 @@
                                         </div>
                                         <div class="price">
                                             <h4>Price:</h4>
-                                            {% if product.is_sale %}
-                                            <p>${{ product.sale_price }}<span>&nbsp;${{ product.price }}</span></p>
-                                            {% else %}
                                             <p>${{ product.price }}</p>
-                                            {% endif %}
                                         </div>
                                         <div class="quantity">
                                             <h4>Quantity:</h4>
@@ -167,10 +163,11 @@
                             </div>
 
                             <div class="row align-items-center product-slider product-slider-3">
+                                {% for product in products %}
                                 <div class="col-lg-3">
                                     <div class="product-item">
                                         <div class="product-title">
-                                            <a href="#">Product Name</a>
+                                            <a href="{% url 'core:product-detail' product.id %}">{{ product.name }}</a>
                                             <div class="ratting">
                                                 <i class="fa fa-star"></i>
                                                 <i class="fa fa-star"></i>
@@ -180,8 +177,8 @@
                                             </div>
                                         </div>
                                         <div class="product-image">
-                                            <a href="product-detail.html">
-                                                <img src="{% static 'store/img/product-10.jpg' %}" alt="Product Image">
+                                            <a href="{% url 'core:product-detail' product.id %}">
+                                                <img src="{{ product.image1.url }}" alt="Product Image">
                                             </a>
                                             <div class="product-action">
                                                 <a href="#"><i class="fa fa-cart-plus"></i></a>
@@ -190,123 +187,12 @@
                                             </div>
                                         </div>
                                         <div class="product-price">
-                                            <h3><span>$</span>99</h3>
-                                            <a class="btn" href=""><i class="fa fa-shopping-cart"></i>Buy Now</a>
+                                            <h3><span>$</span>{{ product.price }}</h3>
+                                            <a class="btn" href="{% url 'core:product-detail' product.id %}"><i class="fa fa-shopping-cart"></i>Buy Now</a>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-3">
-                                    <div class="product-item">
-                                        <div class="product-title">
-                                            <a href="#">Product Name</a>
-                                            <div class="ratting">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                            </div>
-                                        </div>
-                                        <div class="product-image">
-                                            <a href="product-detail.html">
-                                                <img src="{% static 'store/img/product-8.jpg' %}" alt="Product Image">
-                                            </a>
-                                            <div class="product-action">
-                                                <a href="#"><i class="fa fa-cart-plus"></i></a>
-                                                <a href="#"><i class="fa fa-heart"></i></a>
-                                                <a href="#"><i class="fa fa-search"></i></a>
-                                            </div>
-                                        </div>
-                                        <div class="product-price">
-                                            <h3><span>$</span>99</h3>
-                                            <a class="btn" href=""><i class="fa fa-shopping-cart"></i>Buy Now</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3">
-                                    <div class="product-item">
-                                        <div class="product-title">
-                                            <a href="#">Product Name</a>
-                                            <div class="ratting">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                            </div>
-                                        </div>
-                                        <div class="product-image">
-                                            <a href="product-detail.html">
-                                                <img src="{% static 'store/img/product-6.jpg' %}" alt="Product Image">
-                                            </a>
-                                            <div class="product-action">
-                                                <a href="#"><i class="fa fa-cart-plus"></i></a>
-                                                <a href="#"><i class="fa fa-heart"></i></a>
-                                                <a href="#"><i class="fa fa-search"></i></a>
-                                            </div>
-                                        </div>
-                                        <div class="product-price">
-                                            <h3><span>$</span>99</h3>
-                                            <a class="btn" href=""><i class="fa fa-shopping-cart"></i>Buy Now</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3">
-                                    <div class="product-item">
-                                        <div class="product-title">
-                                            <a href="#">Product Name</a>
-                                            <div class="ratting">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                            </div>
-                                        </div>
-                                        <div class="product-image">
-                                            <a href="product-detail.html">
-                                                <img src="{% static 'store/img/product-4.jpg' %}" alt="Product Image">
-                                            </a>
-                                            <div class="product-action">
-                                                <a href="#"><i class="fa fa-cart-plus"></i></a>
-                                                <a href="#"><i class="fa fa-heart"></i></a>
-                                                <a href="#"><i class="fa fa-search"></i></a>
-                                            </div>
-                                        </div>
-                                        <div class="product-price">
-                                            <h3><span>$</span>99</h3>
-                                            <a class="btn" href=""><i class="fa fa-shopping-cart"></i>Buy Now</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3">
-                                    <div class="product-item">
-                                        <div class="product-title">
-                                            <a href="#">Product Name</a>
-                                            <div class="ratting">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                            </div>
-                                        </div>
-                                        <div class="product-image">
-                                            <a href="product-detail.html">
-                                                <img src="{% static 'store/img/product-2.jpg' %}" alt="Product Image">
-                                            </a>
-                                            <div class="product-action">
-                                                <a href="#"><i class="fa fa-cart-plus"></i></a>
-                                                <a href="#"><i class="fa fa-heart"></i></a>
-                                                <a href="#"><i class="fa fa-search"></i></a>
-                                            </div>
-                                        </div>
-                                        <div class="product-price">
-                                            <h3><span>$</span>99</h3>
-                                            <a class="btn" href=""><i class="fa fa-shopping-cart"></i>Buy Now</a>
-                                        </div>
-                                    </div>
-                                </div>
+                                {% endfor %}
                             </div>
                         </div>
                     </div>
@@ -318,19 +204,19 @@
                             <nav class="navbar bg-light">
                                 <ul class="navbar-nav">
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#"><i class="fa fa-female"></i>Fashion & Beauty</a>
+                                        <a class="nav-link" href="{% url 'core:category' 'Women-Clothes' %}"><i class="fa fa-female"></i>Women Clothes</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#"><i class="fa fa-child"></i>Kids & Babies Clothes</a>
+                                        <a class="nav-link" href="{% url 'core:category' 'Kids-Clothes' %}"><i class="fa fa-child"></i>Kids Clothes</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#"><i class="fa fa-tshirt"></i>Men & Women Clothes</a>
+                                        <a class="nav-link" href="{% url 'core:category' 'Men-Clothes' %}"><i class="fa fa-tshirt"></i>Men Clothes</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#"><i class="fa fa-mobile-alt"></i>Gadgets & Accessories</a>
+                                        <a class="nav-link" href="{% url 'core:category' 'Cell-Phones' %}"><i class="fa fa-mobile-alt"></i>Cell Phones</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#"><i class="fa fa-microchip"></i>Electronics & Accessories</a>
+                                        <a class="nav-link" href="{% url 'core:category' 'Electronics-&-Accessories' %}"><i class="fa fa-microchip"></i>Electronics & Accessories</a>
                                     </li>
                                 </ul>
                             </nav>
@@ -361,12 +247,7 @@
                                         </div>
                                     </div>
                                     <div class="product-price">
-                                        {% if product.is_sale %}
-                                        <h3><span>$</span>{{ product.sale_price }}
-                                            <span><strike>&nbsp;${{ product.price }}</strike></span></h3>
-                                            {% else %}
-                                            <h3><span>$</span>{{ product.price }}</h3>
-                                            {% endif %}
+                                        <h3><span>$</span>{{ product.price }}</h3>
                                         <a class="btn" href="{% url 'core:product-detail' product.id %}"><i class="fa fa-shopping-cart"></i>Buy Now</a>
                                     </div>
                                 </div>
@@ -384,22 +265,6 @@
                                 <li><a href="#">Fusce </a><span>(89)</span></li>
                                 <li><a href="#">Sagittis</a><span>(28)</span></li>
                             </ul>
-                        </div>
-                        
-                        <div class="sidebar-widget tag">
-                            <h2 class="title">Tags Cloud</h2>
-                            <a href="#">Lorem ipsum</a>
-                            <a href="#">Vivamus</a>
-                            <a href="#">Phasellus</a>
-                            <a href="#">pulvinar</a>
-                            <a href="#">Curabitur</a>
-                            <a href="#">Fusce</a>
-                            <a href="#">Sem quis</a>
-                            <a href="#">Mollis metus</a>
-                            <a href="#">Sit amet</a>
-                            <a href="#">Vel posuere</a>
-                            <a href="#">orci luctus</a>
-                            <a href="#">Nam lorem</a>
                         </div>
                     </div>
                     <!-- Side Bar End -->

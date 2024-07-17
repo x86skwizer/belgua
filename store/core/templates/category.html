@@ -87,12 +87,7 @@
                                         </div>
                                     </div>
                                     <div class="product-price">
-                                        {% if product.is_sale %}
-                                        <h3><span>$</span>{{ product.sale_price }}
-                                        <span><strike>&nbsp;${{ product.price }}</strike></span></h3>
-                                        {% else %}
                                         <h3><span>$</span>{{ product.price }}</h3>
-                                        {% endif %}
                                         <a class="btn" href="{% url 'core:product-detail' product.id %}"><i class="fa fa-shopping-cart"></i>Buy Now</a>
                                     </div>
                                 </div>
@@ -126,19 +121,19 @@
                             <nav class="navbar bg-light">
                                 <ul class="navbar-nav">
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#"><i class="fa fa-female"></i>Fashion & Beauty</a>
+                                        <a class="nav-link" href="{% url 'core:category' 'Women-Clothes' %}"><i class="fa fa-female"></i>Women Clothes</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#"><i class="fa fa-child"></i>Kids & Babies Clothes</a>
+                                        <a class="nav-link" href="{% url 'core:category' 'Kids-Clothes' %}"><i class="fa fa-child"></i>Kids Clothes</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#"><i class="fa fa-tshirt"></i>Men & Women Clothes</a>
+                                        <a class="nav-link" href="{% url 'core:category' 'Men-Clothes' %}"><i class="fa fa-tshirt"></i>Men Clothes</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#"><i class="fa fa-mobile-alt"></i>Gadgets & Accessories</a>
+                                        <a class="nav-link" href="{% url 'core:category' 'Cell-Phones' %}"><i class="fa fa-mobile-alt"></i>Cell Phones</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#"><i class="fa fa-microchip"></i>Electronics & Accessories</a>
+                                        <a class="nav-link" href="{% url 'core:category' 'Electronics-&-Accessories' %}"><i class="fa fa-microchip"></i>Electronics & Accessories</a>
                                     </li>
                                 </ul>
                             </nav>
@@ -169,12 +164,7 @@
                                         </div>
                                     </div>
                                     <div class="product-price">
-                                        {% if product.is_sale %}
-                                        <h3><span>$</span>{{ product.sale_price }}
-                                        <span><strike>&nbsp;${{ product.price }}</strike></span></h3>
-                                        {% else %}
                                         <h3><span>$</span>{{ product.price }}</h3>
-                                        {% endif %}
                                         <a class="btn" href="{% url 'core:product-detail' product.id %}"><i class="fa fa-shopping-cart"></i>Buy Now</a>
                                     </div>
                                 </div>

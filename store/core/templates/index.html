@@ -14,10 +14,10 @@
                                     <a class="nav-link" href="{% url 'core:index' %}"><i class="fa fa-home"></i>Home</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#"><i class="fa fa-shopping-bag"></i>Special Offers</a>
+                                    <a class="nav-link" href="{% url 'core:category' 'Special-Offers' %}"><i class="fa fa-shopping-bag"></i>Special Offers</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#"><i class="fa fa-plus-square"></i>New Arrivals</a>
+                                    <a class="nav-link" href="{% url 'core:category' 'New-Arrivals' %}"><i class="fa fa-plus-square"></i>New Arrivals</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{% url 'core:category' 'Women-Clothes' %}"><i class="fa fa-female"></i>Women Clothes</a>
@@ -166,7 +166,7 @@
                     <div class="col-md-3">
                         <div class="category-item ch-150">
                             <img src="{% static 'store/img/discount.jpg' %}" />
-                            <a class="category-name" href="">
+                            <a class="category-name" href="{% url 'core:category' 'Special-Offers' %}">
                                 <p>Special Offers</p>
                             </a>
                         </div>
@@ -236,12 +236,7 @@
                                 </div>
                             </div>
                             <div class="product-price">
-                                {% if product.is_sale %}
-                                <h3><span>$</span>{{ product.sale_price }}
-                                <span><strike>&nbsp;${{ product.price }}</strike></span></h3>
-                                {% else %}
                                 <h3><span>$</span>{{ product.price }}</h3>
-                                {% endif %}
                                 <a class="btn" href="{% url 'core:product-detail' product.id %}"><i class="fa fa-shopping-cart"></i>Buy Now</a>
                             </div>
                         </div>
