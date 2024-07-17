@@ -37,7 +37,27 @@ def cart_add(request):
     return JsonResponse({'error': 'Invalid request method or action.'}, status=405)
 
 def cart_delete(request):
-	pass
+    cart = Cart(request)
+
+    if request.method == 'POST' and request.POST.get('action') == 'post':
+        product_id = request.POST.get('product_id')
+
+        if product_id:
+            try:
+                product_id = int(product_id)
+                product = get_object_or_404(Product, id=product_id)
+                cart.remove(product)
+
+                return JsonResponse({'message': 'Product removed from cart successfully.', 'product_name': product.name})
+
+            except ValueError:
+                return JsonResponse({'error': 'Invalid product ID.'}, status=400)
+            except Product.DoesNotExist:
+                return JsonResponse({'error': 'Product does not exist.'}, status=400)
+        else:
+            return JsonResponse({'error': 'Product ID is missing.'}, status=400)
+
+    return JsonResponse({'error': 'Invalid request method or action.'}, status=405)
 
 def cart_update(request):
     cart = Cart(request)

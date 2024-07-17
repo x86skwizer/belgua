@@ -60,7 +60,7 @@
                                                 </div>
                                             </td>
                                             <td><a type="button" data-index="{{ product.id }}" class="btn btn-secondary update-cart"><i class="fas fa-sync"></i></a></td>
-                                            <td><button><i class="fa fa-trash"></i></button></td>
+                                            <td><a type="button" data-index="{{ product.id }}" class="btn remove-cart"><i class="fa fa-trash"></i></a></td>
                                         </tr>
                                         {% endfor %}
 
@@ -102,9 +102,6 @@
                 var productid = $(this).data('index');
                 var product_qty = $('#select' + productid).val();
         
-                console.log("Product ID:", productid);  // Debugging line
-                console.log("Product Quantity:", product_qty);  // Debugging line
-        
                 $.ajax({
                     type: 'POST',
                     url: '{% url "cart:cart_update" %}',
@@ -122,10 +119,27 @@
                     }
                 });
             });
+        
+            $(document).on('click', '.remove-cart', function(e){
+                e.preventDefault();
+                var productid = $(this).data('index');
+        
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url "cart:cart_delete" %}',
+                    data: {
+                        product_id: productid,
+                        csrfmiddlewaretoken: '{{ csrf_token }}',
+                        action: 'post'
+                    },
+                    success: function(json){
+                        location.reload();
+                    },
+                    error: function(xhr, errmsg, err){
+                        console.error(`Error: ${errmsg}`);
+                    }
+                });
+            });
         </script>
-        
-        
-        
-        
 
 {% endblock %}
