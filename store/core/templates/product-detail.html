@@ -8,7 +8,8 @@
             <div class="container-fluid">
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{% url 'core:index' %}">Home</a></li>
-                    <li class="breadcrumb-item active">{{ product.category }}</li>
+                    <li class="breadcrumb-item"><a href="{% url 'core:category' product.category %}">{{ product.category }}</a></li>
+                    <li class="breadcrumb-item active">{{ product.name }}</li>
                 </ul>
             </div>
         </div>

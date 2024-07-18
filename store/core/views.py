@@ -35,6 +35,10 @@ def contact(request):
 	else:
 		return render(request, 'contact.html')
 
+def category_summary(request):
+		categories = Category.objects.all()
+		return render(request, 'category_summary.html', {"categories": categories})
+
 def category(request, foo):
 	# Replace Hyphens with spaces
 	foo = foo.replace('-', ' ')
