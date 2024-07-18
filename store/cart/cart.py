@@ -14,6 +14,22 @@ class Cart():
         # Make sure cart is available on all site
         self.cart = cart
 
+    def db_add(self, product, quantity):
+        product_id = str(product)
+        if product_id in self.cart:
+            self.cart[product_id]['quantity'] += quantity
+        else:
+            pass
+        self.session.modified = True
+        if self.request.user.is_authenticated:
+            # Get the current user profile
+            current_user = Profile.objects.filter(user__id=self.request.user.id)
+            # Convert {'': ,} to {"": ,}
+            cart = str(self.cart)
+            carty = cart.replace("\'", "\"")
+            # Save carty to profile model
+            current_user.update(old_cart=str(carty))
+
     def add(self, product, quantity):
         product_id = str(product.id)
         if product_id in self.cart:
@@ -66,5 +82,13 @@ class Cart():
         product_id = str(product.id)
         if product_id in self.cart:
             del self.cart[product_id]
-            self.session.modified = True
+        self.session.modified = True
+        if self.request.user.is_authenticated:
+            # Get the current user profile
+            current_user = Profile.objects.filter(user__id=self.request.user.id)
+            # Convert {'': ,} to {"": ,}
+            cart = str(self.cart)
+            carty = cart.replace("\'", "\"")
+            # Save carty to profile model
+            current_user.update(old_cart=str(carty))
         return self.cart
