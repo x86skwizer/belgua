@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.core.mail import send_mail
 from django.contrib.auth import authenticate, login, logout
@@ -6,6 +6,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .forms import SignUpForm, UpdateUserFrom, ChangePasswordForm, UserInfoForm
 from django import forms
+from payment.forms import ShippingForm
+from payment.models import ShippingAddress
 from django.contrib import messages
 from .models import Product, Category, Profile
 from django.db.models import Q
@@ -98,17 +100,32 @@ def update_password(request):
 		return redirect('core:index')
 
 def update_info(request):
-	if request.user.is_authenticated:
-		current_user = Profile.objects.get(user__id=request.user.id)
-		form = UserInfoForm(request.POST or None, instance=current_user)
-		if form.is_valid():
-			form.save()
-			messages.success(request, "Info has been updated !")
-			return redirect('core:index')
-		return render(request, 'update_info.html', {'form': form})
-	else:
-		messages.success(request, "Something went wrong !")
-		return redirect('core:index')
+    if request.user.is_authenticated:
+        # Get Current User
+        current_user = get_object_or_404(Profile, user__id=request.user.id)
+        
+        # Get current user shipping info
+        try:
+            shipping_user = ShippingAddress.objects.get(user__id=request.user.id)
+        except ShippingAddress.DoesNotExist:
+            shipping_user = None
+        
+        # Get Original user form
+        form = UserInfoForm(request.POST or None, instance=current_user)
+        
+        # Get user shipping form
+        shipping_form = ShippingForm(request.POST or None, instance=shipping_user)
+        
+        if form.is_valid() or shipping_form.is_valid():
+            form.save()
+            shipping_form.save()
+            messages.success(request, "Info has been updated!")
+            return redirect('core:index')
+        
+        return render(request, 'update_info.html', {'form': form, 'shipping_form': shipping_form})
+    else:
+        messages.error(request, "You need to be logged in to update your information.")
+        return redirect('core:index')
 
 def search(request):
 	# Determine if they filled out
