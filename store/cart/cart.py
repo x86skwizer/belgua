@@ -21,6 +21,15 @@ class Cart():
             self.cart[product_id] = {'quantity': quantity, 'price': str(product.price)}
         self.session.modified = True
 
+    def cart_total(self):
+        product_ids = self.cart.keys()
+        products = Product.objects.filter(id__in=product_ids)
+        total = 0
+        for product in products:
+            total += product.price * self.cart[str(product.id)]['quantity']
+        return total
+
+
     def __len__(self):
         return sum(item['quantity'] for item in self.cart.values())
     
