@@ -10,7 +10,8 @@
 			<div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
 				<div class="navbar-nav mr-auto">
 					<a href="{% url 'core:index' %}" class="nav-item nav-link">Home</a>
-					<a href="{% url 'core:category' 'Special-Offers' %}" class="nav-item nav-link">Special Offers</a>
+					<a href="{% url 'cart:cart_summary' %}" class="nav-item nav-link">Cart</a>
+					<a href="{% url 'core:checkout' %}" class="nav-item nav-link">Checkout</a>
 					<div class="nav-item dropdown">
 						<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Categories</a>
 						<div class="dropdown-menu">
@@ -22,8 +23,6 @@
 							<a href="{% url 'core:category' 'Electronics-&-Accessories' %}" class="dropdown-item">Electronics & Accessories</a>
 						</div>
 					</div>
-					<a href="{% url 'cart:cart_summary' %}" class="nav-item nav-link">Cart</a>
-					<a href="{% url 'core:checkout' %}" class="nav-item nav-link">Checkout</a>
 					<a href="{% url 'core:contact' %}" class="nav-item nav-link">Contact Us</a>
 				</div>
 				<div class="navbar-nav ml-auto">
