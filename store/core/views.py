@@ -4,7 +4,7 @@ from django.core.mail import send_mail
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .forms import SignUpForm
+from .forms import SignUpForm, UpdateUserFrom, ChangePasswordForm
 from django import forms
 from django.contrib import messages
 from .models import Product, Category
@@ -61,8 +61,39 @@ def product_detail(request, pk):
 def checkout(request):
 	return render(request, 'checkout.html')
 
-def my_account(request):
-	return render(request, 'my-account.html')
+def update_user(request):
+	if request.user.is_authenticated:
+		current_user = User.objects.get(id=request.user.id)
+		user_form = UpdateUserFrom(request.POST or None, instance=current_user)
+		if user_form.is_valid():
+			user_form.save()
+			login(request, current_user)
+			messages.success(request, "User has been updated !")
+			return redirect('core:index')
+		return render(request, 'my-account.html', {'user_form': user_form})
+	else:
+		messages.success(request, "Something went wrong !")
+		return redirect('core:update_user')
+
+def update_password(request):
+	if request.user.is_authenticated:
+		current_user = request.user
+		if request.method == "POST":
+			form = ChangePasswordForm(current_user, request.POST)
+			if form.is_valid():
+				form.save()
+				messages.success(request, "Password has been changed !")
+				return redirect('core:login')
+			else:
+				for error in list(form.errors.values()):
+					messages.error(request, error)
+					return redirect('core:update_password')
+		else:
+			form = ChangePasswordForm(current_user)
+			return render(request, "update_password.html", {'form': form})
+	else:
+		messages.success(request, "Something went wrong !")
+		return redirect('core:index')
 
 def wishlist(request):
 	return render(request, 'wishlist.html')
