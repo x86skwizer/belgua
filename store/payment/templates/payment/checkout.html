@@ -67,11 +67,15 @@
                             <a href="{% url 'cart:cart_summary' %}" class="btn"><i class="fa fa-shopping-cart"></i>&nbsp;Update Cart</a>
                         </div>
                         <div class="register-form">
-                            <form method="POST" action="{% url 'payment:checkout' %}">
+                            <form method="POST" action="{% url 'payment:billing_info' %}">
                                 <br/><h4><strong>Shipping Information</strong></h4><br/>
                                 {% csrf_token %}
                                 {{ shipping_form.as_p }}
-                                <button type="submit" class="btn">Continue Billing</button>
+                                <div class="checkout-payment">
+                                    <div class="checkout-btn">
+                                        <button type="submit" class="btn">Continue Billing</button>
+                                    </div>
+                                </div>
                             </form>
                         </div>
                         <br/>
