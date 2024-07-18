@@ -78,13 +78,11 @@
                                         </div>
                                     </div>
                                     <div class="product-image">
-                                        <a href="product-detail.html">
+                                        <a href="{% url 'core:product-detail' product.id %}">
                                             <img src="{{ product.image1.url }}" alt="Product Image">
                                         </a>
                                         <div class="product-action">
-                                            <a href="#"><i class="fa fa-cart-plus"></i></a>
-                                            <a href="#"><i class="fa fa-heart"></i></a>
-                                            <a href="#"><i class="fa fa-search"></i></a>
+                                            <a href="{% url 'core:product-detail' product.id %}"><i class="fa fa-search"></i></a>
                                         </div>
                                     </div>
                                     <div class="product-price">
@@ -95,24 +93,6 @@
                             </div>
                             {% endfor %}
                         </div>
-                        
-                        <!-- Pagination Start -->
-                        <div class="col-md-12">
-                            <nav aria-label="Page navigation example">
-                                <ul class="pagination justify-content-center">
-                                    <li class="page-item disabled">
-                                        <a class="page-link" href="#" tabindex="-1">Previous</a>
-                                    </li>
-                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#">Next</a>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
-                        <!-- Pagination Start -->
                     </div>           
                     
                     <!-- Side Bar Start -->
@@ -155,13 +135,11 @@
                                         </div>
                                     </div>
                                     <div class="product-image">
-                                        <a href="product-detail.html">
+                                        <a href="{% url 'core:product-detail' product.id %}">
                                             <img src="{{ product.image1.url }}" alt="Product Image">
                                         </a>
                                         <div class="product-action">
-                                            <a href="#"><i class="fa fa-cart-plus"></i></a>
-                                            <a href="#"><i class="fa fa-heart"></i></a>
-                                            <a href="#"><i class="fa fa-search"></i></a>
+                                            <a href="{% url 'core:product-detail' product.id %}"><i class="fa fa-search"></i></a>
                                         </div>
                                     </div>
                                     <div class="product-price">
