@@ -8,6 +8,7 @@
             <div class="container-fluid">
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{% url 'core:index' %}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'core:category_summary' %}">Categories</a></li>
                     <li class="breadcrumb-item"><a href="{% url 'core:category' product.category %}">{{ product.category }}</a></li>
                     <li class="breadcrumb-item active">{{ product.name }}</li>
                 </ul>
@@ -57,23 +58,6 @@
                                                 <input id="qty-cart" type="number" value="1" min="1">
                                                 <button class="btn-plus"><i class="fa fa-plus"></i></button>
                                             </div>
-                                        </div>
-                                        <div class="p-size">
-                                            <h4>Size:</h4>
-                                            <div class="btn-group btn-group-sm">
-                                                <button type="button" class="btn">S</button>
-                                                <button type="button" class="btn">M</button>
-                                                <button type="button" class="btn">L</button>
-                                                <button type="button" class="btn">XL</button>
-                                            </div> 
-                                        </div>
-                                        <div class="p-color">
-                                            <h4>Color:</h4>
-                                            <div class="btn-group btn-group-sm">
-                                                <button type="button" class="btn">Blue</button>
-                                                <button type="button" class="btn">White</button>
-                                                <button type="button" class="btn">Black</button>
-                                            </div> 
                                         </div>
                                         <div class="action">
                                             <a type="button" data-product-id="{{ product.id }}" class="btn" id="add-cart"><i class="fa fa-shopping-cart"></i>Add to Cart</a>
@@ -182,9 +166,7 @@
                                                 <img src="{{ product.image1.url }}" alt="Product Image">
                                             </a>
                                             <div class="product-action">
-                                                <a href="#"><i class="fa fa-cart-plus"></i></a>
-                                                <a href="#"><i class="fa fa-heart"></i></a>
-                                                <a href="#"><i class="fa fa-search"></i></a>
+                                                <a href="{% url 'core:product-detail' product.id %}"><i class="fa fa-search"></i></a>
                                             </div>
                                         </div>
                                         <div class="product-price">
@@ -238,13 +220,11 @@
                                         </div>
                                     </div>
                                     <div class="product-image">
-                                        <a href="product-detail.html">
+                                        <a href="{% url 'core:product-detail' product.id %}">
                                             <img src="{{ product.image1.url }}" alt="Product Image">
                                         </a>
                                         <div class="product-action">
-                                            <a href="#"><i class="fa fa-cart-plus"></i></a>
-                                            <a href="#"><i class="fa fa-heart"></i></a>
-                                            <a href="#"><i class="fa fa-search"></i></a>
+                                            <a href="{% url 'core:product-detail' product.id %}"><i class="fa fa-search"></i></a>
                                         </div>
                                     </div>
                                     <div class="product-price">
