@@ -4,7 +4,7 @@ from payment.models import ShippingAddress, Order, OrderItem
 from django.contrib.auth.models import User
 from cart.cart import Cart
 from django.contrib import messages
-from core.models import Product
+from core.models import Product, Profile
 
 
 # Create your views here.
@@ -51,8 +51,20 @@ def process_order(request):
 						# Create order item
 						create_order_item = OrderItem(order_id=order_id, product_id=product_id, user=user, quantity=value, price=price)
 						create_order_item.save()
+
+			# Delete our cart
+			for key in list(request.session.keys()):
+				if key == "session_key":
+					# Delete the key
+					del request.session[key]
+
+			# Delete Cart from Database (old_cart field)
+			current_user = Profile.objects.filter(user__id=request.user.id)
+			# Delete shopping cart in database (old_cart field)
+			current_user.update(old_cart="")
 			messages.success(request, "Order Placed !")
 			return redirect('core:index')
+
 		else:
 			# not logged in
 			# Create Order
@@ -79,6 +91,11 @@ def process_order(request):
 						# Create order item
 						create_order_item = OrderItem(order_id=order_id, product_id=product_id, quantity=value, price=price)
 						create_order_item.save()
+			# Delete our cart
+			for key in list(request.session.keys()):
+				if key == "session_key":
+					# Delete the key
+					del request.session[key]
 			messages.success(request, "Order Placed !")
 			return redirect('core:index')
 	else:
