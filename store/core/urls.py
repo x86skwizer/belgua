@@ -9,7 +9,6 @@ urlpatterns = [
 	path('contact/', views.contact, name='contact'),
 	path('category/<str:foo>', views.category, name='category'),
 	path('product-detail/<int:pk>', views.product_detail, name='product-detail'),
-	path('checkout/', views.checkout, name='checkout'),
 	path('update_user/', views.update_user, name='update_user'),
 	path('update_password/', views.update_password, name='update_password'),
 	path('update_info/', views.update_info, name='update_info'),

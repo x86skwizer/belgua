@@ -62,9 +62,6 @@ def product_detail(request, pk):
 	random.shuffle(products)
 	return render(request, 'product-detail.html', {'products': products, 'product': product})
 
-def checkout(request):
-	return render(request, 'checkout.html')
-
 def update_user(request):
 	if request.user.is_authenticated:
 		current_user = User.objects.get(id=request.user.id)

@@ -81,9 +81,9 @@
                                             <p>Shipping Cost<span>$1</span></p>
                                             <h2>Grand Total<span>${{ totals }}</span></h2>
                                         </div>
+                                        <br/>
                                         <div class="cart-btn">
-                                            <button>Update Cart</button>
-                                            <button>Checkout</button>
+                                            <a href="{% url 'payment:checkout' %}" class="btn">Checkout</a>
                                         </div>
                                     </div>
                                 </div>
