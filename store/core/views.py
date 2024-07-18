@@ -4,10 +4,10 @@ from django.core.mail import send_mail
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .forms import SignUpForm, UpdateUserFrom, ChangePasswordForm
+from .forms import SignUpForm, UpdateUserFrom, ChangePasswordForm, UserInfoForm
 from django import forms
 from django.contrib import messages
-from .models import Product, Category
+from .models import Product, Category, Profile
 import random
 
 # Create your views here
@@ -95,8 +95,19 @@ def update_password(request):
 		messages.success(request, "Something went wrong !")
 		return redirect('core:index')
 
-def wishlist(request):
-	return render(request, 'wishlist.html')
+def update_info(request):
+	if request.user.is_authenticated:
+		current_user = Profile.objects.get(user__id=request.user.id)
+		form = UserInfoForm(request.POST or None, instance=current_user)
+		if form.is_valid():
+			form.save()
+			messages.success(request, "Info has been updated !")
+			return redirect('core:index')
+		return render(request, 'update_info.html', {'form': form})
+	else:
+		messages.success(request, "Something went wrong !")
+		return redirect('core:index')
+
 
 def login_user(request):
 	if request.method == "POST":
@@ -113,6 +124,8 @@ def login_user(request):
 
 	else:
 		return render(request, 'login.html')
+	
+
 
 def logout_user(request):
 	logout(request)
@@ -130,8 +143,8 @@ def register_user(request):
 			#log in user
 			user = authenticate(username=username, password=password)
 			login(request, user)
-			messages.success(request, ("You have registered successfully !"))
-			return redirect('core:index')
+			messages.success(request, ("You have registered successfully ! - (Please fill out your user info)"))
+			return redirect('core:update_info')
 		else:
 			messages.success(request, ("Your registeriation has failed !"))
 			return redirect('core:register')
