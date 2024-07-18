@@ -8,6 +8,7 @@ from .forms import SignUpForm, UpdateUserFrom, ChangePasswordForm, UserInfoForm
 from django import forms
 from django.contrib import messages
 from .models import Product, Category, Profile
+from django.db.models import Q
 import random
 
 # Create your views here
@@ -108,6 +109,21 @@ def update_info(request):
 		messages.success(request, "Something went wrong !")
 		return redirect('core:index')
 
+def search(request):
+	# Determine if they filled out
+	products = list(Product.objects.all())
+	random.shuffle(products)
+	if request.method == "POST":
+		searched = request.POST['searched']
+		# Query The Products DB Model
+		searched = Product.objects.filter(Q(name__icontains=searched) | Q(description__icontains=searched))
+		# Test for null
+		if not searched:
+			messages.success(request, ("Product not found ... Try again !"))
+			return render(request, "search.html", {'products':products})
+		return render(request, "search.html", {'searched':searched, 'products':products})
+	else:
+		return render(request, "search.html", {'products':products})
 
 def login_user(request):
 	if request.method == "POST":
