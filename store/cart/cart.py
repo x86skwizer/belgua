@@ -29,6 +29,8 @@ class Cart():
             carty = cart.replace("\'", "\"")
             # Save carty to profile model
             current_user.update(old_cart=str(carty))
+        ret_var = self.cart
+        return ret_var
 
     def add(self, product, quantity):
         product_id = str(product.id)
@@ -45,6 +47,8 @@ class Cart():
             carty = cart.replace("\'", "\"")
             # Save carty to profile model
             current_user.update(old_cart=str(carty))
+        ret_var = self.cart
+        return ret_var
 
     def cart_total(self):
         product_ids = self.cart.keys()
@@ -75,8 +79,9 @@ class Cart():
         # Update cart(Dictionnary)
         if product_id in self.cart:
             self.cart[product_id]['quantity'] = quantity
-            self.session.modified = True
-        return self.cart
+        self.session.modified = True
+        ret_var = self.cart
+        return ret_var
     
     def remove(self, product):
         product_id = str(product.id)
@@ -91,4 +96,5 @@ class Cart():
             carty = cart.replace("\'", "\"")
             # Save carty to profile model
             current_user.update(old_cart=str(carty))
-        return self.cart
+        ret_var = self.cart
+        return ret_var
