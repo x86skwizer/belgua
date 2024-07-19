@@ -20,14 +20,14 @@ def index(request):
 	random.shuffle(products)
 	return render(request, 'index.html', {'products': products})
 
+
 def contact(request):
 	if request.method == 'POST':
 		message_name = request.POST['message-name']
 		message_email = request.POST['message-email']
 		message_subject = request.POST['message-subject']
 		message = request.POST['message']
-		#send an email
-		send_mail(
+		send_mail( #send an email
 			message_name, # subject
 			message, # message
 			message_email, # from email
@@ -37,28 +37,29 @@ def contact(request):
 	else:
 		return render(request, 'contact.html')
 
+
 def category_summary(request):
 		categories = Category.objects.all()
 		return render(request, 'category_summary.html', {"categories": categories})
 
+
 def category(request, foo):
-	# Replace Hyphens with spaces
-	foo = foo.replace('-', ' ')
-	# Grab category from URL
-	try:
-		# Look Up category
-		category = Category.objects.get(name=foo)
+	foo = foo.replace('-', ' ') # Replace Hyphens with spaces
+	try: # Grab category from URL
+		category = Category.objects.get(name=foo) # Look Up category
 		products = Product.objects.filter(category=category)
 		return render(request, 'category.html', {'products': products, 'category': category})
 	except:
 		messages.success(request, ("Category doesn't exist !"))
 		return redirect('core:index')
 
+
 def product_detail(request, pk):
 	products = list(Product.objects.all())
 	product = Product.objects.get(id=pk)
 	random.shuffle(products)
 	return render(request, 'product-detail.html', {'products': products, 'product': product})
+
 
 def update_user(request):
 	if request.user.is_authenticated:
@@ -73,6 +74,7 @@ def update_user(request):
 	else:
 		messages.success(request, "Something went wrong !")
 		return redirect('core:update_user')
+
 
 def update_password(request):
 	if request.user.is_authenticated:
@@ -94,6 +96,7 @@ def update_password(request):
 		messages.success(request, "Something went wrong !")
 		return redirect('core:index')
 
+
 def update_info(request):
     if request.user.is_authenticated:
         current_user = get_object_or_404(Profile, user__id=request.user.id) # Get Current User
@@ -113,6 +116,7 @@ def update_info(request):
         messages.error(request, "You need to be logged in to update your information.")
         return redirect('core:index')
 
+
 def search(request):
 	
 	products = list(Product.objects.all()) # Determine if they filled out
@@ -126,6 +130,7 @@ def search(request):
 		return render(request, "search.html", {'searched':searched, 'products':products})
 	else:
 		return render(request, "search.html", {'products':products})
+
 
 def login_user(request):
 	if request.method == "POST":
@@ -150,10 +155,12 @@ def login_user(request):
 	else:
 		return render(request, 'login.html')
 
+
 def logout_user(request):
 	logout(request)
 	messages.success(request, ("You have been logged out !"))
 	return redirect('core:index')
+
 
 def register_user(request):
 	form = SignUpForm()
