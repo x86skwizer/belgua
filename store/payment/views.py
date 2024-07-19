@@ -20,7 +20,6 @@ def process_order(request):
 		payment_form = PaymentForm(request.POST or None)
 		# Get Shipping Session Data
 		my_shipping = request.session.get('my_shipping')
-
 		# Gather Order Info
 		full_name = my_shipping['shipping_full_name']
 		email = my_shipping['shipping_email']
@@ -34,9 +33,7 @@ def process_order(request):
 			# Create Order
 			create_order = Order(user=user, full_name=full_name, email=email, shipping_address=shipping_address, amount_paid=amount_paid)
 			create_order.save()
-
 			# Add order items
-
 			# Get the order ID
 			order_id = create_order.pk
 			# Get product Info
@@ -51,31 +48,25 @@ def process_order(request):
 						# Create order item
 						create_order_item = OrderItem(order_id=order_id, product_id=product_id, user=user, quantity=value, price=price)
 						create_order_item.save()
-
 			# Delete our cart
 			for key in list(request.session.keys()):
 				if key == "session_key":
 					# Delete the key
 					del request.session[key]
-
 			# Delete Cart from Database (old_cart field)
 			current_user = Profile.objects.filter(user__id=request.user.id)
 			# Delete shopping cart in database (old_cart field)
 			current_user.update(old_cart="")
 			messages.success(request, "Order Placed !")
 			return redirect('core:index')
-
 		else:
 			# not logged in
 			# Create Order
 			create_order = Order(full_name=full_name, email=email, shipping_address=shipping_address, amount_paid=amount_paid)
 			create_order.save()
-
 			# Add order items
-			
 			# Get the order ID
 			order_id = create_order.pk
-			
 			# Get product Info
 			for product in cart_products():
 				# Get product ID
@@ -109,7 +100,6 @@ def checkout(request):
 	cart_products = cart.get_prods
 	quantities = cart.get_quants
 	totals = cart.cart_total()
-
 	if request.user.is_authenticated:
 		# Checkout as logged in user
 		# Shipping User
@@ -129,27 +119,19 @@ def billing_info(request):
 		cart_products = cart.get_prods
 		quantities = cart.get_quants
 		totals = cart.cart_total()
-
 		# Create a session with Shipping Info
 		my_shipping = request.POST
 		request.session['my_shipping'] = my_shipping
-
 	# Check to see if user is logged in
 		if request.user.is_authenticated:
 			# Get The Billing Form
 			billing_form = PaymentForm()
 			return render(request, "payment/billing_info.html", {"cart_products":cart_products, "quantities":quantities, "totals":totals, "shipping_info":request.POST, "billing_form":billing_form})
-
 		else:
 			# Not logged in
 			# Get The Billing Form
 			billing_form = PaymentForm()
 			return render(request, "payment/billing_info.html", {"cart_products":cart_products, "quantities":quantities, "totals":totals, "shipping_info":request.POST, "billing_form":billing_form})
-
-
-		
-		shipping_form = request.POST
-		return render(request, "payment/billing_info.html", {"cart_products":cart_products, "quantities":quantities, "totals":totals, "shipping_form":shipping_form})
 	else:
 		messages.success(request, "Access Denied")
 		return redirect('core:index')
