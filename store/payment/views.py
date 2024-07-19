@@ -7,86 +7,59 @@ from django.contrib import messages
 from core.models import Product, Profile
 
 
-# Create your views here.
-
 def process_order(request):
 	if request.POST:
-		# Get the cart
-		cart = Cart(request)
+		cart = Cart(request) # Get the cart
 		cart_products = cart.get_prods
 		quantities = cart.get_quants
 		totals = cart.cart_total()
-		# Get Billing Info from the last page
-		payment_form = PaymentForm(request.POST or None)
-		# Get Shipping Session Data
-		my_shipping = request.session.get('my_shipping')
-		# Gather Order Info
-		full_name = my_shipping['shipping_full_name']
+		payment_form = PaymentForm(request.POST or None) # Get Billing Info from the last page
+		my_shipping = request.session.get('my_shipping') # Get Shipping Session Data
+		full_name = my_shipping['shipping_full_name'] # Gather Order Info
 		email = my_shipping['shipping_email']
 		# Create Shipping Address from session info
 		shipping_address = f"{my_shipping['shipping_address1']}\n{my_shipping['shipping_address2']}\n{my_shipping['shipping_city']}\n{my_shipping['shipping_state']}\n{my_shipping['shipping_zipcode']}\n{my_shipping['shipping_country']}"
 		amount_paid = totals
-		# Create an Order
-		if request.user.is_authenticated:
-			# logged in
-			user = request.user
-			# Create Order
-			create_order = Order(user=user, full_name=full_name, email=email, shipping_address=shipping_address, amount_paid=amount_paid)
+		if request.user.is_authenticated: # Create an Order
+			user = request.user # logged in
+			create_order = Order(user=user, full_name=full_name, email=email, shipping_address=shipping_address, amount_paid=amount_paid) # Create Order
 			create_order.save()
 			# Add order items
-			# Get the order ID
-			order_id = create_order.pk
-			# Get product Info
-			for product in cart_products():
-				# Get product ID
-				product_id = product.id
-				# Get product price
-				price = product.price
-				# Get quantity
-				for key,value in quantities().items():
+			order_id = create_order.pk # Get the order ID
+			for product in cart_products(): # Get product Info
+				product_id = product.id # Get product ID
+				price = product.price # Get product price
+				for key,value in quantities().items(): # Get quantity
 					if int(key) == product.id:
-						# Create order item
-						create_order_item = OrderItem(order_id=order_id, product_id=product_id, user=user, quantity=value, price=price)
+						create_order_item = OrderItem(order_id=order_id, product_id=product_id, user=user, quantity=value, price=price) # Create order item
 						create_order_item.save()
 			# Delete our cart
 			for key in list(request.session.keys()):
 				if key == "session_key":
-					# Delete the key
-					del request.session[key]
-			# Delete Cart from Database (old_cart field)
-			current_user = Profile.objects.filter(user__id=request.user.id)
-			# Delete shopping cart in database (old_cart field)
-			current_user.update(old_cart="")
+					del request.session[key] # Delete the key
+			current_user = Profile.objects.filter(user__id=request.user.id) # Delete Cart from Database (old_cart field)
+			current_user.update(old_cart="") # Delete shopping cart in database (old_cart field)
 			messages.success(request, "Order Placed !")
 			return redirect('core:index')
-		else:
-			# not logged in
-			# Create Order
-			create_order = Order(full_name=full_name, email=email, shipping_address=shipping_address, amount_paid=amount_paid)
+		else: # not logged in
+			create_order = Order(full_name=full_name, email=email, shipping_address=shipping_address, amount_paid=amount_paid) # Create Order
 			create_order.save()
 			# Add order items
-			# Get the order ID
-			order_id = create_order.pk
-			# Get product Info
-			for product in cart_products():
-				# Get product ID
-				product_id = product.id
-				# Get product price
-				if product.is_sale:
+			order_id = create_order.pk # Get the order ID
+			for product in cart_products(): # Get product Info
+				product_id = product.id # Get product ID
+				if product.is_sale: # Get product price
 					price = product.sale_price
 				else:
 					price = product.price
-				# Get quantity
-				for key,value in quantities().items():
+				for key,value in quantities().items(): # Get quantity
 					if int(key) == product.id:
-						# Create order item
-						create_order_item = OrderItem(order_id=order_id, product_id=product_id, quantity=value, price=price)
+						create_order_item = OrderItem(order_id=order_id, product_id=product_id, quantity=value, price=price) # Create order item
 						create_order_item.save()
 			# Delete our cart
 			for key in list(request.session.keys()):
 				if key == "session_key":
-					# Delete the key
-					del request.session[key]
+					del request.session[key] # Delete the key
 			messages.success(request, "Order Placed !")
 			return redirect('core:index')
 	else:
@@ -95,46 +68,38 @@ def process_order(request):
 
 
 def checkout(request):
-	# Get the cart
-	cart = Cart(request)
+	cart = Cart(request) # Get the cart
 	cart_products = cart.get_prods
 	quantities = cart.get_quants
 	totals = cart.cart_total()
 	if request.user.is_authenticated:
 		# Checkout as logged in user
-		# Shipping User
-		shipping_user = ShippingAddress.objects.get(user__id=request.user.id)
-		# Shipping Form
-		shipping_form = ShippingForm(request.POST or None, instance=shipping_user)
+		shipping_user = ShippingAddress.objects.get(user__id=request.user.id) # Shipping User
+		shipping_form = ShippingForm(request.POST or None, instance=shipping_user) # Shipping Form
 		return render(request, "payment/checkout.html", {"cart_products":cart_products, "quantities":quantities, "totals":totals, "shipping_form":shipping_form })
 	else:
-		# Checkout as guest
-		shipping_form = ShippingForm(request.POST or None)
+		shipping_form = ShippingForm(request.POST or None) # Checkout as guest
 		return render(request, "payment/checkout.html", {"cart_products":cart_products, "quantities":quantities, "totals":totals, "shipping_form":shipping_form})
+
 
 def billing_info(request):
 	if request.POST:
-		# Get the cart
-		cart = Cart(request)
+		cart = Cart(request) # Get the cart
 		cart_products = cart.get_prods
 		quantities = cart.get_quants
 		totals = cart.cart_total()
-		# Create a session with Shipping Info
-		my_shipping = request.POST
+		my_shipping = request.POST # Create a session with Shipping Info
 		request.session['my_shipping'] = my_shipping
-	# Check to see if user is logged in
-		if request.user.is_authenticated:
-			# Get The Billing Form
-			billing_form = PaymentForm()
+		if request.user.is_authenticated: # Check to see if user is logged in
+			billing_form = PaymentForm() # Get The Billing Form
 			return render(request, "payment/billing_info.html", {"cart_products":cart_products, "quantities":quantities, "totals":totals, "shipping_info":request.POST, "billing_form":billing_form})
-		else:
-			# Not logged in
-			# Get The Billing Form
-			billing_form = PaymentForm()
+		else: # Not logged in
+			billing_form = PaymentForm() # Get The Billing Form
 			return render(request, "payment/billing_info.html", {"cart_products":cart_products, "quantities":quantities, "totals":totals, "shipping_info":request.POST, "billing_form":billing_form})
 	else:
 		messages.success(request, "Access Denied")
 		return redirect('core:index')
+
 
 def payment_success(request):
 	return render(request, "payment/payment_success.html", {})
