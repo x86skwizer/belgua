@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}      
-{% block title %}Shipped Items{% endblock %}
+{% block title %}Unshipped Items{% endblock %}
 {% block content %}
         
 
@@ -10,12 +10,13 @@
 				<ul class="breadcrumb">
 					<li class="breadcrumb-item"><a href="{% url 'core:index' %}">Home</a></li>
 					<li class="breadcrumb-item"><a href="{% url 'core:update_user' %}">Account</a></li>
-                    <li class="breadcrumb-item active">Shipped Items</li>
+                    <li class="breadcrumb-item active">Unshipped Items</li>
                 </ul>
             </div>
         </div>
         <!-- Breadcrumb End -->
         
+		
         <!-- Wishlist Start -->
         <div class="wishlist-page">
             <div class="container-fluid">
@@ -26,25 +27,31 @@
                                 <table class="table table-bordered">
                                     <thead class="thead-dark">
                                         <tr>
-                                            <th>Order</th>
-                                            <th>Price</th>
-                                            <th>Customer Email</th>
-                                            <th>Date Shipped</th>
+                                            <th>Order {{ order.id}} - ${{order.amount_paid}}</th>
                                         </tr>
                                     </thead>
                                     <tbody class="align-middle">
-										{% for item in orders %}
                                         <tr>
                                             <td>
-												<p><a href="{% url 'payment:orders' item.id %}">{{ item.id }}</a></p>
-                                            </td>
-                                            <td>${{ item.amount_paid }}</td>
-                                            <td>
-                                                {{ item.email }}
-                                            </td>
-                                            <td>{{ item.date_shipped }}</td>
+												<div class="card-body">
+													Email: {{ order.email}}<br/>
+													{% if order.date_shipped %}
+													  Date Shipped: {{ order.date_shipped}}
+													{% else %}
+													 Date Ordered: {{ order.date_ordered}}
+													{% endif %}
+													<br/><br/>
+													{{ order.full_name }}<br/>
+													<pre>{{ order.shipping_address }}
+													</pre>
+													{% for item in items %}
+													  {{ item.product }} - {{ item.quantity }} - ${{ item.price }}<br/>
+												
+													{% endfor %}
+													<br/><br/>
+											  </div>
+											</td>
                                         </tr>
-										{% endfor %}
                                     </tbody>
                                 </table>
                             </div>
@@ -54,5 +61,4 @@
             </div>
         </div>
         <!-- Wishlist End -->
-        
 {% endblock %}

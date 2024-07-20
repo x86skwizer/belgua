@@ -34,9 +34,7 @@ def create_shipping(sender, instance, created, **kwargs):
 post_save.connect(create_shipping, sender=User)
 
 
-# Create Order Model
 class Order(models.Model):
-	# Foreign Key
 	user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
 	full_name = models.CharField(max_length=250)
 	email = models.EmailField(max_length=250)
@@ -59,13 +57,10 @@ def set_shipped_date_on_update(sender, instance, **kwargs):
 			instance.date_shipped = now
 	
 
-# Create Order Items Model
 class OrderItem(models.Model):
-	# Foreign Keys
 	order = models.ForeignKey(Order, on_delete=models.CASCADE, null=True)
 	product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
 	user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
-
 	quantity = models.PositiveBigIntegerField(default=1)
 	price = models.DecimalField(max_digits=7, decimal_places=2)
 
