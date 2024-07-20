@@ -22,6 +22,10 @@
                         <div class="nav flex-column nav-pills" role="tablist" aria-orientation="vertical">
                             <a class="nav-link active" id="account-nav" data-toggle="pill" href="#account-tab" role="tab"><i class="fa fa-user"></i>Account Details</a>
                             <a class="nav-link" href="{% url 'core:update_password' %}"><i class="fa fa-lock"></i>Update Password</a>
+                            {% if user.is_superuser %}
+                            <a class="nav-link" href="{% url 'payment:shipped_dash' %}"><i class="fa fa fa-truck"></i>Shipped Orders</a>
+                            <a class="nav-link" href="{% url 'payment:not_shipped_dash' %}"><i class="fa fa-archive"></i>Unshipped Orders</a>
+                            {% endif %}
                             <a class="nav-link" id="orders-nav" data-toggle="pill" href="#orders-tab" role="tab"><i class="fa fa-shopping-bag"></i>Orders</a>
                             <a class="nav-link" id="payment-nav" data-toggle="pill" href="#payment-tab" role="tab"><i class="fa fa-credit-card"></i>Payment Method</a>
                             <a class="nav-link" href="{% url 'core:logout' %}"><i class="fa fa-sign-out-alt"></i>Logout</a>

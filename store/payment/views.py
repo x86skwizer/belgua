@@ -7,6 +7,44 @@ from django.contrib import messages
 from core.models import Product, Profile
 
 
+def payment_success(request):
+	return render(request, "payment/payment_success.html", {})
+
+
+def checkout(request):
+	cart = Cart(request) # Get the cart
+	cart_products = cart.get_prods
+	quantities = cart.get_quants
+	totals = cart.cart_total()
+	if request.user.is_authenticated:
+		# Checkout as logged in user
+		shipping_user = ShippingAddress.objects.get(user__id=request.user.id) # Shipping User
+		shipping_form = ShippingForm(request.POST or None, instance=shipping_user) # Shipping Form
+		return render(request, "payment/checkout.html", {"cart_products":cart_products, "quantities":quantities, "totals":totals, "shipping_form":shipping_form })
+	else:
+		shipping_form = ShippingForm(request.POST or None) # Checkout as guest
+		return render(request, "payment/checkout.html", {"cart_products":cart_products, "quantities":quantities, "totals":totals, "shipping_form":shipping_form})
+
+
+def billing_info(request):
+	if request.POST:
+		cart = Cart(request) # Get the cart
+		cart_products = cart.get_prods
+		quantities = cart.get_quants
+		totals = cart.cart_total()
+		my_shipping = request.POST # Create a session with Shipping Info
+		request.session['my_shipping'] = my_shipping
+		if request.user.is_authenticated: # Check to see if user is logged in
+			billing_form = PaymentForm() # Get The Billing Form
+			return render(request, "payment/billing_info.html", {"cart_products":cart_products, "quantities":quantities, "totals":totals, "shipping_info":request.POST, "billing_form":billing_form})
+		else: # Not logged in
+			billing_form = PaymentForm() # Get The Billing Form
+			return render(request, "payment/billing_info.html", {"cart_products":cart_products, "quantities":quantities, "totals":totals, "shipping_info":request.POST, "billing_form":billing_form})
+	else:
+		messages.success(request, "Access Denied")
+		return redirect('core:index')
+
+
 def process_order(request):
 	if request.POST:
 		cart = Cart(request) # Get the cart
@@ -67,39 +105,20 @@ def process_order(request):
 		return redirect('core:index')
 
 
-def checkout(request):
-	cart = Cart(request) # Get the cart
-	cart_products = cart.get_prods
-	quantities = cart.get_quants
-	totals = cart.cart_total()
-	if request.user.is_authenticated:
-		# Checkout as logged in user
-		shipping_user = ShippingAddress.objects.get(user__id=request.user.id) # Shipping User
-		shipping_form = ShippingForm(request.POST or None, instance=shipping_user) # Shipping Form
-		return render(request, "payment/checkout.html", {"cart_products":cart_products, "quantities":quantities, "totals":totals, "shipping_form":shipping_form })
-	else:
-		shipping_form = ShippingForm(request.POST or None) # Checkout as guest
-		return render(request, "payment/checkout.html", {"cart_products":cart_products, "quantities":quantities, "totals":totals, "shipping_form":shipping_form})
+def not_shipped_dash(request):
+	if request.user.is_authenticated and request.user.is_superuser:
+		orders = Order.objects.filter(shipped=False)
 
-
-def billing_info(request):
-	if request.POST:
-		cart = Cart(request) # Get the cart
-		cart_products = cart.get_prods
-		quantities = cart.get_quants
-		totals = cart.cart_total()
-		my_shipping = request.POST # Create a session with Shipping Info
-		request.session['my_shipping'] = my_shipping
-		if request.user.is_authenticated: # Check to see if user is logged in
-			billing_form = PaymentForm() # Get The Billing Form
-			return render(request, "payment/billing_info.html", {"cart_products":cart_products, "quantities":quantities, "totals":totals, "shipping_info":request.POST, "billing_form":billing_form})
-		else: # Not logged in
-			billing_form = PaymentForm() # Get The Billing Form
-			return render(request, "payment/billing_info.html", {"cart_products":cart_products, "quantities":quantities, "totals":totals, "shipping_info":request.POST, "billing_form":billing_form})
+		return render(request, "payment/not_shipped_dash.html", {'orders': orders})
 	else:
-		messages.success(request, "Access Denied")
+		messages.success(request, "Access Denied !")
 		return redirect('core:index')
 
 
-def payment_success(request):
-	return render(request, "payment/payment_success.html", {})
+def shipped_dash(request):
+	if request.user.is_authenticated and request.user.is_superuser:
+		orders = Order.objects.filter(shipped=True)
+		return render(request, "payment/shipped_dash.html", {'orders': orders})
+	else:
+		messages.success(request, "Access Denied !")
+		return redirect('core:index')

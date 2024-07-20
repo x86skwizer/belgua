@@ -44,6 +44,7 @@ class UpdateUserFrom(UserChangeForm):
 	class Meta:
 		model = User
 		fields = ('username', 'first_name', 'last_name', 'email')
+		exclude = ['user',]
 
 	def __init__(self, *args, **kwargs):
 		super(UpdateUserFrom, self).__init__(*args, **kwargs)
