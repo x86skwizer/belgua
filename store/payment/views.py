@@ -99,6 +99,8 @@ def process_order(request):
 			for key in list(request.session.keys()):
 				if key == "session_key":
 					del request.session[key] # Delete the key
+			current_user = Profile.objects.filter(user__id=request.user.id) # Delete Cart from Database (old_cart field)
+			current_user.update(old_cart="") # Delete shopping cart in database (old_cart field)
 			messages.success(request, "Order Placed !")
 			return redirect('core:index')
 	else:
