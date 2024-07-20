@@ -30,19 +30,24 @@
                                             <th>Price</th>
                                             <th>Customer Email</th>
                                             <th>Date Ordered</th>
+                                            <th>Unshipped</th>
                                         </tr>
                                     </thead>
                                     <tbody class="align-middle">
 										{% for item in orders %}
                                         <tr>
-                                            <td>
-                                                    <p><a href="{% url 'payment:orders' item.id %}">{{ item.id }}</a></p>
-                                            </td>
+                                            <td><p><a href="{% url 'payment:orders' item.id %}">{{ item.id }}</a></p></td>
                                             <td>${{ item.amount_paid }}</td>
-                                            <td>
-                                                {{ item.email }}
-                                            </td>
+                                            <td>{{ item.email }}</td>
                                             <td>{{ item.date_ordered }}</td>
+											<td>
+												<form method="POST">
+													{% csrf_token %}
+													<input type="hidden" name="shipping_status" value="true">
+													<input type="hidden" name="num" value={{item.id}}>
+													<button type="Submit" class="btn-cart">Mark Shipped</button>
+												</form>
+											</td>
                                         </tr>
 										{% endfor %}
                                     </tbody>
@@ -54,5 +59,6 @@
             </div>
         </div>
         <!-- Wishlist End -->
+		<br/><br/>
         
 {% endblock %}
