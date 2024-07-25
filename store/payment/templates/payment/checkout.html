@@ -18,8 +18,21 @@
         <div class="checkout">
             <div class="container-fluid"> 
                 <div class="row">
-                    {% if cart_products %}
                     <div class="col-lg-8">
+                        <div class="register-form">
+                            <form method="POST" action="{% url 'payment:billing_info' %}">
+                                <br/><h4><strong>Shipping Information</strong></h4><br/>
+                                {% csrf_token %}
+                                {{ shipping_form.as_p }}
+                                <div class="checkout-payment">
+                                    <div class="checkout-btn">
+                                        <button type="submit" class="btn">Continue Billing</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <br/>
+                        {% if cart_products %}
                         <div class="cart-page-inner">
                             <div class="table-responsive">
                                 <table class="table table-bordered">
@@ -66,19 +79,7 @@
                         <div class="checkout-btn">
                             <a href="{% url 'cart:cart_summary' %}" class="btn"><i class="fa fa-shopping-cart"></i>&nbsp;Update Cart</a>
                         </div>
-                        <div class="register-form">
-                            <form method="POST" action="{% url 'payment:billing_info' %}">
-                                <br/><h4><strong>Shipping Information</strong></h4><br/>
-                                {% csrf_token %}
-                                {{ shipping_form.as_p }}
-                                <div class="checkout-payment">
-                                    <div class="checkout-btn">
-                                        <button type="submit" class="btn">Continue Billing</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <br/>
+                        
                     </div>
                     {% endif %}
                     <div class="col-lg-4">
@@ -95,5 +96,6 @@
             </div>
         </div>
         <!-- Checkout End -->
+        <br/>
         
 {% endblock %}
