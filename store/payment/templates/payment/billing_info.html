@@ -84,23 +84,20 @@
                         </div>
                         <br/><br/><br/>
                         <div class="checkout-payment">
-                            <form method="POST" action="{% url 'payment:billing_info' %}">
-                                <div class="payment-methods">
-                                    <h1>Shipping Info</h1>
-                                    {% csrf_token %}
-                                    <b>Name: </b><br/><mark>{{ shipping_info.shipping_full_name }}</mark><br/><br/>
-                                    <b>Email: </b><br/><mark>{{ shipping_info.shipping_email }}</mark><br/><br/>
-                                    <b>Address 1: </b><br/><mark>{{ shipping_info.shipping_address1 }}</mark><br/><br/>
-                                    <b>Address 2: </b><br/><mark>{{ shipping_info.shipping_address2 }}</mark><br/><br/>
-                                    <b>City: </b><br/><mark>{{ shipping_info.shipping_city }}</mark><br/><br/>
-                                    <b>State: </b><br/><mark>{{ shipping_info.shipping_state }}</mark><br/><br/>
-                                    <b>ZipCode: </b><br/><mark>{{ shipping_info.shipping_zipcode }}</mark><br/><br/>
-                                    <b>Country: </b><br/><mark>{{ shipping_info.shipping_country }}</mark><br/><br/>
-                                </div>
-                                <div class="checkout-btn">
-                                    <a href="{% url 'payment:checkout' %}"><button>Update Info</button></a>
-                                </div>
-                            </form>
+                            <div class="payment-methods">
+                                <h1>Shipping Info</h1>
+                                <b>Name: </b><br/><mark>{{ shipping_info.shipping_full_name }}</mark><br/><br/>
+                                <b>Email: </b><br/><mark>{{ shipping_info.shipping_email }}</mark><br/><br/>
+                                <b>Address 1: </b><br/><mark>{{ shipping_info.shipping_address1 }}</mark><br/><br/>
+                                <b>Address 2: </b><br/><mark>{{ shipping_info.shipping_address2 }}</mark><br/><br/>
+                                <b>City: </b><br/><mark>{{ shipping_info.shipping_city }}</mark><br/><br/>
+                                <b>State: </b><br/><mark>{{ shipping_info.shipping_state }}</mark><br/><br/>
+                                <b>ZipCode: </b><br/><mark>{{ shipping_info.shipping_zipcode }}</mark><br/><br/>
+                                <b>Country: </b><br/><mark>{{ shipping_info.shipping_country }}</mark><br/><br/>
+                            </div>
+                            <div class="checkout-btn">
+                                <a href="{% url 'payment:checkout' %}"><button>Update Info</button></a>
+                            </div>
                         </div>
                     </div>
                 </div>
