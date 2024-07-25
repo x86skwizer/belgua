@@ -185,8 +185,9 @@ def create_checkout_session(request):
 
     # Create line items for each product in the cart
 	line_items = []
-	nbr_prod = 0
-	for product, quantity in zip(products, quantities):
+	for product in products:
+		product_id_str = str(product.id)
+		quantity = quantities.get(product_id_str, 0)
 		line_item = {
             'price_data': {
                 'currency': 'usd',
