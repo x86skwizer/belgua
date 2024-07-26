@@ -1,5 +1,3 @@
-I'd be glad to craft a README.md for your Belgua e-commerce project (estore) leveraging Django, Stripe, and Railway.app:
-
 **Project Belgua: estore**
 
 **Overview**
