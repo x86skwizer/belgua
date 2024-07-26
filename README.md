@@ -45,7 +45,7 @@ estore is a secure and user-friendly e-commerce website powered by Django and de
 2. **Install Dependencies:**
    a. Navigate to the project directory:
       ```bash
-      cd estore
+      cd store
       ```
    b. Install Python dependencies:
       ```bash
