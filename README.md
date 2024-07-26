@@ -39,7 +39,7 @@ estore is a secure and user-friendly e-commerce website powered by Django and de
 
 1. **Clone the Repository:**
    ```bash
-   git clone https://<your_repository_url>.git
+   git clone https://github.com/x86skwizer/belgua.git
    ```
 
 2. **Install Dependencies:**
